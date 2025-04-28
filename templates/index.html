@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document Analyzer</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <h2>Upload Document</h2>
+
+            <div id="dropZone" class="drop-zone">
+                <p>Click or drag a PDF or image file here</p>
+                <input type="file" id="fileInput" accept=".pdf,.png,.jpg,.jpeg">
+            </div>
+
+            <div class="buttons hidden" id="buttonPanel">
+                <button id="analyzeBtn">Analyze</button>
+                <button id="clearBtn" class="danger">Clear</button>
+            </div>
+
+            <div id="previewContainer">
+                <p>No file selected.</p>
+            </div>
+
+            <p id="status" class="status-text"></p>
+        </div>
+
+        <div class="right-panel">
+            <h2>Analysis Result</h2>
+            <pre id="resultOutput">{}</pre>
+        </div>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById("fileInput");
+        const analyzeBtn = document.getElementById("analyzeBtn");
+        const clearBtn = document.getElementById("clearBtn");
+        const resultOutput = document.getElementById("resultOutput");
+        const previewContainer = document.getElementById("previewContainer");
+        const statusText = document.getElementById("status");
+        const buttonPanel = document.getElementById("buttonPanel");
+        const dropZone = document.getElementById("dropZone");
+
+        let selectedFile = null;
+
+        fileInput.addEventListener("change", handleFile);
+
+        dropZone.addEventListener("dragover", (e) => {
+            e.preventDefault();
+            dropZone.classList.add("dragover");
+        });
+
+        dropZone.addEventListener("dragleave", () => {
+            dropZone.classList.remove("dragover");
+        });
+
+        dropZone.addEventListener("drop", (e) => {
+            e.preventDefault();
+            dropZone.classList.remove("dragover");
+            const file = e.dataTransfer.files[0];
+            if (file) {
+                fileInput.files = e.dataTransfer.files;
+                handleFile();
+            }
+        });
+
+        function handleFile() {
+            previewContainer.innerHTML = "";
+            resultOutput.textContent = "{}";
+            statusText.textContent = "";
+
+            const file = fileInput.files[0];
+            selectedFile = file;
+
+            if (!file) {
+                previewContainer.innerHTML = "<p>No file selected.</p>";
+                buttonPanel.classList.add("hidden");
+                return;
+            }
+
+            const fileType = file.type;
+            if (fileType.startsWith("image/")) {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const img = document.createElement("img");
+                    img.src = reader.result;
+                    img.className = "preview-image";
+                    previewContainer.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            } else if (fileType === "application/pdf") {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const iframe = document.createElement("iframe");
+                    iframe.src = reader.result;
+                    iframe.className = "preview-pdf";
+                    previewContainer.appendChild(iframe);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                previewContainer.innerHTML = "<p class='error'>Please upload a valid PDF or image file.</p>";
+                selectedFile = null;
+                buttonPanel.classList.add("hidden");
+                return;
+            }
+
+            buttonPanel.classList.remove("hidden");
+        }
+
+        analyzeBtn.addEventListener("click", async () => {
+            if (!selectedFile) {
+                statusText.textContent = "Please select a valid file before analyzing.";
+                statusText.className = "status-text error";
+                return;
+            }
+
+            analyzeBtn.disabled = true;
+            analyzeBtn.style.opacity = 0.6;
+            analyzeBtn.textContent = "Analyzing...";
+            statusText.textContent = "Analyzing document... Please wait.";
+            statusText.className = "status-text";
+            resultOutput.textContent = "{}";
+
+            const formData = new FormData();
+            formData.append("file", selectedFile);
+
+            try {
+                const response = await fetch("/upload", {
+                    method: "POST",
+                    body: formData
+                });
+
+                if (!response.ok) throw new Error("Server error");
+
+                const result = await response.json();
+                resultOutput.textContent = JSON.stringify(result, null, 2);
+                statusText.textContent = "Analysis completed.";
+                statusText.className = "status-text success";
+            } catch (error) {
+                statusText.textContent = "An error occurred during analysis.";
+                statusText.className = "status-text error";
+            }
+
+            analyzeBtn.disabled = false;
+            analyzeBtn.style.opacity = 1;
+            analyzeBtn.textContent = "Analyze";
+        });
+
+    clearBtn.addEventListener("click", () => {
+        fileInput.value = "";
+        previewContainer.innerHTML = "<p>No file selected.</p>";
+        resultOutput.textContent = "{}";
+        statusText.textContent = "";
+        selectedFile = null;
+        buttonPanel.classList.add("hidden");
+    });
+    </script>
+</body>
+</html>

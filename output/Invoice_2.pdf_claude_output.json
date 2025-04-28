@@ -1,0 +1,62 @@
+{
+  "invoice_details": {
+    "company": {
+      "name": "GLOBAL TECH SOLUTIONS LTD",
+      "address": "Unit 7, Industrial Park",
+      "city": "London",
+      "country": "UK",
+      "postal_code": "EC1A 1BB",
+      "vat": "GB123456789",
+      "phone": "+44 20 7123 4567"
+    },
+    "invoice_number": "INV-53470",
+    "invoice_date": "20/02/2025",
+    "customer_id": "CUST-5503",
+    "bill_to": {
+      "company": "Tech Innovations Inc.",
+      "address": "123 Business Avenue",
+      "city": "New York",
+      "state": "NY",
+      "postal_code": "10001",
+      "country": "USA",
+      "tax_id": "US987654321"
+    },
+    "items": [
+      {
+        "product_id": "PRD-5976",
+        "description": "Power Supply",
+        "quantity": 39,
+        "price": 479.1,
+        "total": 18684.9,
+        "po_number": "PO-526365"
+      },
+      {
+        "product_id": "PRD-8211",
+        "description": "Motherboard",
+        "quantity": 32,
+        "price": 107.79,
+        "total": 3449.28,
+        "po_number": "PO-526365"
+      },
+      {
+        "product_id": "PRD-9055",
+        "description": null,
+        "quantity": 28,
+        "price": 128.72,
+        "total": 3604.16,
+        "po_number": "PO-526365"
+      }
+    ],
+    "financial_details": {
+      "subtotal": 11420.61,
+      "vat_rate": 20,
+      "vat_amount": 2284.12,
+      "total_amount": 13704.73,
+      "payment_terms": "Net 30",
+      "bank_details": {
+        "iban": "GB29 NWBK 6016 1331 9268 19",
+        "swift_code": "NWBKGB2L"
+      }
+    }
+  }
+}

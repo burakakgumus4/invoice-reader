@@ -1,0 +1,82 @@
+{
+  "invoice_details": {
+    "number": "INV-43071",
+    "date": "20/02/2025",
+    "due_date": "22/03/2025"
+  },
+  "supplier": {
+    "name": "GLOBAL TECH SOLUTIONS LTD.",
+    "address": {
+      "street": "123 Innovation Street",
+      "area": "Tech District",
+      "city": "London",
+      "country": "UK",
+      "postcode": "EC1A 1BB"
+    },
+    "phone": "+44 20 7123 4567",
+    "vat_number": "GB123456789"
+  },
+  "customer": {
+    "name": "Tech Innovations Inc.",
+    "department": "Procurement Department",
+    "address": {
+      "street": "789 Silicon Avenue",
+      "city": "San Francisco",
+      "state": "CA",
+      "zip": "94105",
+      "country": "USA"
+    },
+    "vat_number": "US987654321"
+  },
+  "line_items": [
+    {
+      "description": "Software Development Services - Frontend Development",
+      "hours": 80,
+      "rate": 145.0,
+      "amount": 11600.0
+    },
+    {
+      "description": "Backend API Integration",
+      "hours": 120,
+      "rate": 165.0,
+      "amount": 19800.0
+    },
+    {
+      "description": "Cloud Infrastructure Setup",
+      "hours": 40,
+      "rate": 185.0,
+      "amount": 7400.0
+    },
+    {
+      "description": "Security Audit and Implementation",
+      "hours": 35,
+      "rate": 195.0,
+      "amount": 6825.0
+    },
+    {
+      "description": "Project Management",
+      "hours": 45,
+      "rate": 125.0,
+      "amount": 5625.0
+    }
+  ],
+  "totals": {
+    "subtotal": 51250.0,
+    "vat_rate": 20,
+    "vat_amount": 10250.0,
+    "total": 61500.0
+  },
+  "payment_details": {
+    "bank": "Barclays Bank",
+    "account_name": "Global Tech Solutions Ltd",
+    "sort_code": "20-00-00",
+    "account_number": "12345678",
+    "iban": "GB29 BARC 2000 0012 3456 78",
+    "swift_bic": "BARCGB22"
+  },
+  "terms": [
+    "Payment is due within 30 days",
+    "Please include invoice number in payment reference",
+    "Late payments are subject to 2% monthly interest charge"
+  ]
+}

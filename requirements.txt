@@ -1,0 +1,12 @@
+paddlepaddle-gpu==2.6.1
+paddleocr==2.8.1
+numpy
+PyMuPDF
+opencv-contrib-python
+opencv-python
+opencv-python-headless
+pdf2image
+fastapi[standard]
+transformers
+torch
+
